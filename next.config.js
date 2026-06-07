@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // use a separate build directory (no leading dot) to avoid Windows permission issues
-  distDir: 'next_build',
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },

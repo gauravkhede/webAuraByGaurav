@@ -43,7 +43,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next_build/types/**/*.ts",
     "next_build/types/**/*.ts"
   ],
   "exclude": [
