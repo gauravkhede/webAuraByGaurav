@@ -1,0 +1,32 @@
+# Next.js
+.next/
+out/
+*.log
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build
+.turbo/
+dist/
+
+# OS
+Thumbs.db
+.DS_Store
