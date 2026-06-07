@@ -35,7 +35,14 @@ export function ScrollVideoSection({
     video.muted = true;
     video.playsInline = true;
     video.crossOrigin = 'anonymous';
-    video.preload = 'metadata';
+    video.preload = 'auto';
+    // Ensure autoplay is disabled and video stays paused while we control currentTime
+    try {
+      video.autoplay = false;
+      video.pause();
+    } catch (e) {
+      // ignore
+    }
 
     let isInitialized = false;
 
@@ -51,30 +58,7 @@ export function ScrollVideoSection({
         return;
       }
 
-      // Create a proxy object to smooth out seeking
-      const proxy = { currentTime: 0 };
-
-      // Create animation timeline
-      const tl = gsap.timeline({
-        onUpdate: () => {
-          if (video && isFinite(proxy.currentTime)) {
-            try {
-              video.currentTime = proxy.currentTime;
-            } catch (e) {
-              console.warn('Error seeking video:', e);
-            }
-          }
-        },
-      });
-
-      // Animate from 0 to video duration
-      tl.to(proxy, {
-        currentTime: duration,
-        duration: duration,
-        ease: 'none',
-      });
-
-      timelineRef.current = tl;
+      // We'll map scroll progress directly to video time for tight sync
 
       // Kill existing trigger if present
       if (triggerRef.current) {
@@ -88,11 +72,21 @@ export function ScrollVideoSection({
           start: 'top top',
           end: () => `+=${pinDuration}`,
           pin: container,
-          scrub: 0.5, // Smooth scrubbing with slight delay
+          scrub: true, // immediate, tightly synced scrubbing
           fastScrollEnd: true,
           onUpdate: (self) => {
-            if (tl && !isNaN(self.progress)) {
-              tl.progress(self.progress);
+            if (!isNaN(self.progress) && video && isFinite(duration)) {
+              const time = Math.max(0, Math.min(1, self.progress)) * duration;
+              try {
+                // Only seek if difference is noticeable to avoid excessive seeks
+                if (Math.abs((video.currentTime || 0) - time) > 0.02) {
+                  video.currentTime = time;
+                }
+                // Keep the video paused so it doesn't auto-run
+                video.pause();
+              } catch (e) {
+                console.warn('Error seeking video:', e);
+              }
             }
           },
           onEnter: () => setIsLoading(false),

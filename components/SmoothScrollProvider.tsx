@@ -14,11 +14,12 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
-      duration: 1.2,
+      // Disable smoothing so scroll position maps immediately to scroll events
+      duration: 0.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical' as const,
       gestureDirection: 'vertical' as const,
-      smooth: true,
+      smooth: false,
       smoothTouch: false,
       touchMultiplier: 2,
     });

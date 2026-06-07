@@ -60,10 +60,11 @@ export function createVideoScrollTrigger(
   timeline: gsap.Timeline,
   options: {
     pinDuration?: number;
-    scrubAmount?: number;
+    // Allow boolean or number; default to true for immediate sync
+    scrubAmount?: boolean | number;
   } = {}
 ) {
-  const { pinDuration = 3000, scrubAmount = 0.5 } = options;
+  const { pinDuration = 3000, scrubAmount = true } = options;
 
   const trigger = ScrollTrigger.create({
     trigger: element,
