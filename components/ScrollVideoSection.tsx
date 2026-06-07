@@ -22,7 +22,7 @@ export function ScrollVideoSection({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const triggerRef = useRef<ScrollTrigger | null>(null);
-  const timelineRef = useRef<gsap.Timeline | null>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

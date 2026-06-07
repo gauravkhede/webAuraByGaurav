@@ -57,7 +57,7 @@ export function createVideoScrubTimeline(
  */
 export function createVideoScrollTrigger(
   element: HTMLElement,
-  timeline: gsap.Timeline,
+  timeline: gsap.core.Timeline,
   options: {
     pinDuration?: number;
     // Allow boolean or number; default to true for immediate sync

@@ -17,10 +17,9 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       // Disable smoothing so scroll position maps immediately to scroll events
       duration: 0.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical' as const,
-      gestureDirection: 'vertical' as const,
-      smooth: false,
-      smoothTouch: false,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      syncTouch: false,
       touchMultiplier: 2,
     });
 
